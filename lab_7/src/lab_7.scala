@@ -26,10 +26,7 @@ object lab_7 {
   }
 
   def main(args: Array[String]): Unit = {
-
-    println(patterMatching('A'))
-    println(patterMatching('b'))
-    println(patterMatching('z'))
-    println(patterMatching('Y'))
+    val s: String = "The quick brown fox jumps over the lazy dog"
+    println(s.map(Char => patterMatching(Char)))
   }
 }

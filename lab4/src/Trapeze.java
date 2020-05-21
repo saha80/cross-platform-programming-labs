@@ -10,7 +10,7 @@ public class Trapeze implements Runnable {
     }
 
     public void calculateArea() {
-        result = (begin + end) / 2 * height;
+        result = Math.abs(begin + end) / 2 * height;
     }
 
     public double getResult() {

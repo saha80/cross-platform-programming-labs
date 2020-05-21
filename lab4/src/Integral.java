@@ -6,7 +6,6 @@ import java.util.ArrayList;
 public class Integral {
     private Expression formula;
     private double result;
-    private Thread thread;
     private final double from, to;
     private final double step;
     private final int precision;

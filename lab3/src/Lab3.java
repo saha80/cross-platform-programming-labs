@@ -1,8 +1,14 @@
-import complex.ComplexLinearForm;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
-public class Lab3 {
+public class Lab3 extends Application {
+
+    @Override
+    public void start(Stage stage) {
+        stage.setScene(new UI().getScene());
+    }
+
     public static void main(String[] args) {
-        ComplexLinearForm c1 = new ComplexLinearForm(1,2);
-        ComplexLinearForm c2 = new ComplexLinearForm(1,2);
+        launch(args);
     }
 }

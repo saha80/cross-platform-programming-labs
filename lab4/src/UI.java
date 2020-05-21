@@ -11,17 +11,26 @@ import javafx.scene.layout.VBox;
 public class UI {
     private final Scene scene;
     private final TextField formula = new TextField();
+    private final TextField from = new TextField();
+    private final TextField to = new TextField();
 
-    HBox perimeterIntegral = new HBox(10);
     private final Button calculateIntegralButton = new Button("Integral");
     private final Label integralResultLabel = new Label("0");
 
     EventHandler<ActionEvent> perimeterButtonPressed = calculatePerimeter -> {
-        Integral integral = new Integral(-2, 2, 1000);
+        double form, to;
         try {
-            integral.setFormula(formula.getText());
+            form = Double.parseDouble(this.from.getText());
+            to = Double.parseDouble(this.to.getText());
+        } catch (NumberFormatException e) {
+            this.integralResultLabel.setText("Invalid ranges");
+            return;
+        }
+        Integral integral = new Integral(form, to, (int) (Math.abs(to - form) / 0.01));
+        try {
+            integral.setFormula(formula.getText().replace('X', 'x').replaceAll("\\s+", ""));
         } catch (IllegalArgumentException e) {
-            this.integralResultLabel.setText("Illegal formula");
+            this.integralResultLabel.setText("Invalid formula");
             return;
         }
         integral.calculateIntegral();
@@ -30,18 +39,33 @@ public class UI {
 
     public UI() {
         VBox rootVBox = new VBox(10);
-        
+
         HBox inputFormula = new HBox(20);
-        
+        HBox IntegralResultHBox = new HBox(10);
+        HBox BoundsHBox = new HBox(10);
+        HBox fromBound = new HBox(10);
+        HBox toBound = new HBox(10);
+
         inputFormula.getChildren().addAll(new Label("Formula:"), formula);
         inputFormula.setAlignment(Pos.CENTER);
-        
-        perimeterIntegral.getChildren().addAll(calculateIntegralButton);
-        perimeterIntegral.setAlignment(Pos.CENTER);
+
+        to.setMaxWidth(50);
+        toBound.getChildren().addAll(new Label("To:"), to);
+        toBound.setAlignment(Pos.CENTER);
+
+        from.setMaxWidth(50);
+        fromBound.getChildren().addAll(new Label("From:"), from);
+        fromBound.setAlignment(Pos.CENTER);
+
+        BoundsHBox.getChildren().addAll(toBound, fromBound);
+        BoundsHBox.setAlignment(Pos.CENTER);
+
+        IntegralResultHBox.getChildren().addAll(calculateIntegralButton, integralResultLabel);
+        IntegralResultHBox.setAlignment(Pos.CENTER);
 
         calculateIntegralButton.setOnAction(perimeterButtonPressed);
 
-        rootVBox.getChildren().addAll(inputFormula, calculateIntegralButton, integralResultLabel);
+        rootVBox.getChildren().addAll(inputFormula, BoundsHBox, IntegralResultHBox);
         rootVBox.setAlignment(Pos.CENTER);
         scene = new Scene(rootVBox, 300, 200);
     }

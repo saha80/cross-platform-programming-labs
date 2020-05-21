@@ -1,4 +1,6 @@
-package complex;
+package number.complex.complexImpl;
+
+import number.complex.Complex;
 
 public class ComplexPolarForm extends Complex {
     private double r;

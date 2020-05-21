@@ -1,6 +1,8 @@
-package complex;
+package number.complex;
 
-public abstract class Complex {
+import number.Number;
+
+public abstract class Complex extends Number {
     public abstract void add(Complex c);
 
     public abstract void sub(Complex c);
