@@ -7,94 +7,82 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import number.complex.complexImpl.ComplexLinearForm;
+
+import java.util.Arrays;
 
 public class UI {
-    private Scene scene;
-    HBox inputLength = new HBox(20);
-    TextField length = new TextField();
-    HBox inputHeight = new HBox(20);
-    TextField height = new TextField();
+    private final Scene scene;
+    TextField firstReal = new TextField();
+    TextField firstImag = new TextField();
+    TextField secondReal = new TextField();
+    TextField secondImag = new TextField();
 
-    HBox areaParameter = new HBox(10);
-    Button calculateAreaButton = new Button("Площадь");
-    Label area = new Label("0");
+    Button calculateButton = new Button("Calculate");
+    Label result = new Label("0");
 
-    HBox perimeterParameter = new HBox(10);
-    Button calculatePerimeterButton = new Button("Периметр");
-    Label perimeter = new Label("0");
-
-    HBox RectangleParameters = new HBox(10);
-
-    EventHandler<ActionEvent> areaButtonPressed = calculateArea -> {
-        Integer l, h;
+    EventHandler<ActionEvent> calculateButtonPressed = calculateArea -> {
+        double leftReal, leftImag;
+        double rightReal, rightImag;
         try {
-            l = Integer.valueOf(length.getText());
-            if (l < 0) {
-                area.setText("negative length");
-                return;
+            leftReal = Double.parseDouble(firstReal.getText());
+            if (!firstImag.getText().isEmpty()) {
+                leftImag = Double.parseDouble(firstImag.getText());
+            } else {
+                leftImag = 0;
             }
         } catch (NumberFormatException e) {
-            area.setText("invalid length");
+            result.setText("invalid length");
             return;
         }
         try {
-            h = Integer.valueOf(height.getText());
-            if (h < 0) {
-                area.setText("negative height");
-                return;
+            rightReal = Double.parseDouble(secondReal.getText());
+            if (!secondImag.getText().isEmpty()) {
+                rightImag = Double.parseDouble(secondImag.getText());
+            } else {
+                rightImag = 0;
             }
         } catch (NumberFormatException e) {
-            area.setText("invalid height");
+            result.setText("invalid height");
             return;
         }
-        area.setText(String.valueOf(l * h));
-    };
-
-    EventHandler<ActionEvent> perimeterButtonPressed = calculatePerimeter -> {
-        Integer l, h;
-        try {
-            l = Integer.valueOf(length.getText());
-            if (l < 0) {
-                perimeter.setText("negative length");
-                return;
-            }
-        } catch (NumberFormatException e) {
-            perimeter.setText("invalid height");
-            return;
+        Expression expression = new Expression(
+                Arrays.asList(new ComplexLinearForm(leftReal, leftImag), new ComplexLinearForm(rightReal, rightImag)));
+        ComplexLinearForm res = expression.calculateResult();
+        String resAsStr = String.valueOf(res.real());
+        if (res.real() > 0) {
+            resAsStr += '+' + String.valueOf(res.imag()) + 'i';
+        } else if (res.imag() < 0) {
+            resAsStr += String.valueOf(res.imag()) + 'i';
         }
-        try {
-            h = Integer.valueOf(height.getText());
-            if (h < 0) {
-                perimeter.setText("negative height");
-                return;
-            }
-        } catch (NumberFormatException e) {
-            perimeter.setText("invalid height");
-            return;
-        }
-        perimeter.setText(String.valueOf(2 * (l + h)));
+        result.setText(resAsStr);
     };
 
     public UI() {
-        VBox rootHLayout = new VBox(10);
-        inputLength.getChildren().addAll(new Label("Длинна"), length);
-        inputLength.setAlignment(Pos.CENTER);
-        inputHeight.getChildren().addAll(new Label("Высота"), height);
-        inputHeight.setAlignment(Pos.CENTER);
+        VBox rootHBox = new VBox(10);
 
-        areaParameter.getChildren().addAll(calculateAreaButton, area);
-        areaParameter.setAlignment(Pos.CENTER);
-        perimeterParameter.getChildren().addAll(calculatePerimeterButton, perimeter);
-        perimeterParameter.setAlignment(Pos.CENTER);
+        HBox leftNumberBox = new HBox(20);
+        HBox rightNumberBox = new HBox(20);
+        HBox CalculateAndResult = new HBox(10);
 
-        calculateAreaButton.setOnAction(areaButtonPressed);
-        calculatePerimeterButton.setOnAction(perimeterButtonPressed);
+        firstReal.setMaxWidth(100);
+        firstImag.setMaxWidth(100);
+        leftNumberBox.getChildren().addAll(new Label("Left"), firstReal, firstImag);
+        leftNumberBox.setAlignment(Pos.CENTER);
 
-        RectangleParameters.getChildren().addAll(areaParameter, perimeterParameter);
-        RectangleParameters.setAlignment(Pos.CENTER);
-        rootHLayout.getChildren().addAll(inputLength, inputHeight, RectangleParameters);
-        rootHLayout.setAlignment(Pos.CENTER);
-        scene = new Scene(rootHLayout, 300, 200);
+        secondReal.setMaxWidth(100);
+        secondImag.setMaxWidth(100);
+        rightNumberBox.getChildren().addAll(new Label("Right"), secondReal, secondImag);
+        rightNumberBox.setAlignment(Pos.CENTER);
+
+        calculateButton.setOnAction(calculateButtonPressed);
+        CalculateAndResult.getChildren().addAll(calculateButton, result);
+        CalculateAndResult.setAlignment(Pos.CENTER);
+
+        rootHBox.getChildren().addAll(leftNumberBox, rightNumberBox, CalculateAndResult);
+        rootHBox.setAlignment(Pos.CENTER);
+
+        scene = new Scene(rootHBox, 300, 200);
     }
 
     public Scene getScene() {

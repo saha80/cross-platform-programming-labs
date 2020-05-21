@@ -15,10 +15,10 @@ object lab_5 {
   }
 
   def fib(n: Int): Int = {
-    var prev = 0
-    var next = 1
-    var i = 0
-    for (i <- 0 to n) {
+    var prev: Int = 0
+    var next: Int = 1
+    var i: Int = 0
+    for (i <- 0 until n) {
       val temp = next + prev
       prev = next
       next = temp
@@ -27,7 +27,7 @@ object lab_5 {
   }
 
   def main(args: Array[String]): Unit = {
-    println(fib_tr(3))
-    println(fib(3))
+    println(fib_tr(11))
+    println(fib(11))
   }
 }

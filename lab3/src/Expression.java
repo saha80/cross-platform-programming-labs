@@ -1,8 +1,10 @@
+import number.complex.complexImpl.ComplexLinearForm;
+
 import java.util.List;
 import java.util.Random;
 
 enum Operation {
-    ADD, SUB
+    ADD, SUB, DIV, MUL
 }
 
 public class Expression {

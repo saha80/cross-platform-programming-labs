@@ -3,16 +3,16 @@ public class ComplexLinearForm extends Complex {
     private double real;
     private double imag;
 
-    ComplexLinearForm(double real, double img) {
+    ComplexLinearForm(double real, double imag) {
         this.real = real;
-        this.imag = img;
+        this.imag = imag;
     }
 
     double real() {
         return real;
     }
 
-    double img() {
+    double imag() {
         return imag;
     }
 
