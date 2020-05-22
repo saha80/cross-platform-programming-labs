@@ -7,8 +7,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import number.complex.complexImpl.ComplexLinearForm;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class UI {

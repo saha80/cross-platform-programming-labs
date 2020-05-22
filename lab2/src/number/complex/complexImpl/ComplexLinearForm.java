@@ -1,18 +1,21 @@
+package number.complex.complexImpl;
+
+import number.complex.Complex;
 
 public class ComplexLinearForm extends Complex {
     private double real;
     private double imag;
 
-    ComplexLinearForm(double real, double imag) {
+    public ComplexLinearForm(double real, double imag) {
         this.real = real;
         this.imag = imag;
     }
 
-    double real() {
+    public double real() {
         return real;
     }
 
-    double imag() {
+    public double imag() {
         return imag;
     }
 

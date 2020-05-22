@@ -6,7 +6,7 @@ public class Lab2 extends Application {
     @Override
     public void start(Stage stage) {
         stage.setScene(new UI().getScene());
-        stage.setTitle("");
+        stage.setTitle("Lab 2");
         stage.show();
     }
 

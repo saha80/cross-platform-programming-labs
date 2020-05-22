@@ -8,23 +8,40 @@ enum Operation {
 }
 
 public class Expression {
-    private List<ComplexLinearForm> list;
-    private final Operation operation = Operation.values()[new Random().nextInt(Operation.values().length)];
+    private final List<ComplexLinearForm> list;
+    private Operation operation;
+    private ComplexLinearForm result;
 
     public Expression(List<ComplexLinearForm> list) {
         this.list = list;
     }
 
-    public ComplexLinearForm calculateResult() {
-        ComplexLinearForm sum = list.get(0);
+    public void setOperation(Operation op) {
+        this.operation = op;
+    }
+
+    public ComplexLinearForm getResult() {
+        return result;
+    }
+
+    public void calculateResult() {
+        ComplexLinearForm res = list.get(0);
         switch (operation) {
             case ADD:
-                sum.add(list.get(1));
-                return sum;
+                res.add(list.get(1));
+                result = res;
+                return;
             case SUB:
-                sum.sub(list.get(1));
-                return sum;
+                res.sub(list.get(1));
+                result = res;
+                return;
+            case MUL:
+                res.mul(list.get(1));
+                result = res;
+                return;
+            case DIV:
+                res.div(list.get(1));
+                result = res;
         }
-        return sum;
     }
 }

@@ -1,3 +1,5 @@
+import number.complex.complexImpl.ComplexLinearForm;
+
 import java.util.List;
 import java.util.Random;
 
@@ -6,7 +8,7 @@ enum Operation {
 }
 
 public class Expression {
-    private List<ComplexLinearForm> list;
+    private final List<ComplexLinearForm> list;
     private final Operation operation = Operation.values()[new Random().nextInt(Operation.values().length)];
 
     public Expression(List<ComplexLinearForm> list) {

@@ -3,6 +3,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -13,6 +14,9 @@ import java.util.Arrays;
 
 public class UI {
     private final Scene scene;
+    private User user = new User("");
+    ChoiceBox<String> choiceBox = new ChoiceBox<>();
+
     TextField firstReal = new TextField();
     TextField firstImag = new TextField();
     TextField secondReal = new TextField();
@@ -48,7 +52,8 @@ public class UI {
         }
         Expression expression = new Expression(
                 Arrays.asList(new ComplexLinearForm(leftReal, leftImag), new ComplexLinearForm(rightReal, rightImag)));
-        ComplexLinearForm res = expression.calculateResult();
+        user.calculateExpression(expression, Operation.valueOf(choiceBox.getValue()));
+        ComplexLinearForm res = expression.getResult();
         String resAsStr = String.valueOf(res.real());
         if (res.real() > 0) {
             resAsStr += '+' + String.valueOf(res.imag()) + 'i';
@@ -60,6 +65,8 @@ public class UI {
 
     public UI() {
         VBox rootHBox = new VBox(10);
+
+        choiceBox.getItems().addAll("ADD", "SUB", "DIV", "MUL");
 
         HBox leftNumberBox = new HBox(20);
         HBox rightNumberBox = new HBox(20);
@@ -79,7 +86,7 @@ public class UI {
         CalculateAndResult.getChildren().addAll(calculateButton, result);
         CalculateAndResult.setAlignment(Pos.CENTER);
 
-        rootHBox.getChildren().addAll(leftNumberBox, rightNumberBox, CalculateAndResult);
+        rootHBox.getChildren().addAll(choiceBox, leftNumberBox, rightNumberBox, CalculateAndResult);
         rootHBox.setAlignment(Pos.CENTER);
 
         scene = new Scene(rootHBox, 300, 200);
