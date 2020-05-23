@@ -23,6 +23,8 @@ object lab_8 {
   }
 
   class DataBase {
+    var list: ListBuffer[User] = new ListBuffer[User]
+
     def show(): Unit = {
       var i: Int = 0
       for (user <- list) {
@@ -32,22 +34,19 @@ object lab_8 {
       }
     }
 
-    var list: ListBuffer[User] = new ListBuffer[User]
-
-    def add(user: User): Unit = {
+    def add(user: => User): Unit = {
       list += user
     }
 
-    def setAgeAndCountry(username: String): Unit = {
+    def setAgeAndCountry(username: => String): Unit = {
       val res = list.indexWhere(User => User.name == username)
       if (res != -1) {
+        println("enter new age and country")
         list(res).age = scala.io.StdIn.readInt()
         list(res).country = scala.io.StdIn.readLine()
+      } else {
+        println("user not found")
       }
-    }
-
-    def find(user: User): Int = {
-      list.indexOf(user)
     }
   }
 
