@@ -1,4 +1,4 @@
 package number;
 
-public class Number {
+public abstract class Number {
 }
